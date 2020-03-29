@@ -38,7 +38,7 @@ after update on user
 for each row
 begin
 insert into user_jnl values(
-default, 'U', old.id, new.id, NOW());
+default, 'D', old.id, new.id, NOW());
 end;
 
 create trigger user_update_trigger
