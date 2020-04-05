@@ -17,7 +17,7 @@ INSERT INTO `user_copy` VALUES (1,'ken'),(2,'hiro'),(3,'yano');
 DROP TABLE IF EXISTS `user_jnl`;
 CREATE TABLE `user_jnl` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `OPERATION` varchar(1) DEFAULT NULL,
+  `operation` varchar(1) DEFAULT NULL,
   `old_id` int(11) DEFAULT NULL,
   `new_id` int(11) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
@@ -34,11 +34,11 @@ insert into user_jnl values(default, 'I', null, NEW.id, NOW());
 end;
 
 create trigger user_delete_trigger
-after update on user
+after delete on user
 for each row
 begin
 insert into user_jnl values(
-default, 'U', old.id, new.id, NOW());
+default, 'D', OLD.id, NEW.id, NOW());
 end;
 
 create trigger user_update_trigger
@@ -46,5 +46,5 @@ after update on user
 for each row
 begin
 insert into user_jnl values(
-default, 'U', old.id, new.id, NOW());
+default, 'U', OLD.id, NEW.id, NOW());
 end;
